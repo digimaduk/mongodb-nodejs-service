@@ -11,10 +11,12 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const User = mongoose.model('User', new mongoose.Schema({
-  name: String,
-  email: String
-}));
+// const User = mongoose.model('User', new mongoose.Schema({
+//   name: String,
+//   email: String
+// }));
+
+const User = require('./models/User');
 
 const AppModel = mongoose.model('AppModel', new mongoose.Schema({
   category: String,
@@ -24,7 +26,7 @@ const AppModel = mongoose.model('AppModel', new mongoose.Schema({
 
 // API route
 app.get('/', (req, res) => {
-  res.send('Service running');
+  res.send('Node Express Service running');
 });
 
 app.get('/api/users', async (req, res) => {
@@ -77,4 +79,4 @@ app.post('/api/links', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on ${PORT}`));
+app.listen(PORT, () => console.log(`Express Server running on ${PORT}`));
