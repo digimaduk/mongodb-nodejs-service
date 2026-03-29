@@ -17,6 +17,7 @@ app.use(express.json());
 // }));
 
 const User = require('./models/User');
+const Link = require('./models/Link');
 
 const AppModel = mongoose.model('AppModel', new mongoose.Schema({
   category: String,
@@ -30,13 +31,24 @@ app.get('/', (req, res) => {
 });
 
 app.get('/api/users', async (req, res) => {
+  console.log('Getting Users Info');
   const users = await User.find();
   res.json(users);
 });
 
+// app.get('/api/links', async (req, res) => {
+//   const links = await AppModel.find();
+//   res.json(links);
+// });
+
 app.get('/api/links', async (req, res) => {
-  const links = await AppModel.find();
-  res.json(links);
+try {
+    console.log('Getting Links Info');
+    const links = await Link.find({}, "name category url"); 
+    res.json(links);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 app.post('/api/users', async (req, res) => {
