@@ -18,6 +18,8 @@ app.use(express.json());
 
 const User = require('./models/User');
 const Link = require('./models/Link');
+const Link = require('./models/Question');
+const { default: Question } = require('./models/Question');
 
 const AppModel = mongoose.model('AppModel', new mongoose.Schema({
   category: String,
@@ -89,6 +91,55 @@ app.post('/api/links', async (req, res) => {
     res.status(500).json({ error: 'Failed to add links' });
   }
 });
+
+app.post('/api/questions', async (req, res) => {
+  try {
+    const question = await Question.create(req.body);
+    res.json(question);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create question' });
+  }
+});
+
+app.get('/api/questions', async (req, res) => {
+try {
+    console.log('Getting questions Info');
+    const questions = await Question.find(); 
+    res.json(questions);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+// GET /api/questions?category=UK History
+app.get("/api/questions", async (req, res) => {
+  try {
+    const { category } = req.query;
+
+    if (!category) {
+      return res.status(400).json({
+        success: false,
+        message: "Category is required"
+      });
+    }
+
+    const questions = await Question.find({ category });
+
+    res.json({
+      success: true,
+      count: questions.length,
+      data: questions
+    });
+
+  } catch (error) {
+    console.error("Error fetching questions:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
+  }
+});
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express Server running on ${PORT}`));
