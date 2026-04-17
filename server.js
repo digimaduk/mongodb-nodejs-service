@@ -20,6 +20,7 @@ const User = require('./models/User');
 const Link = require('./models/Link');
 const Question = require('./models/Question');
 const Fact = require('./models/Fact');
+const Contact = require('./models/Contact');
 
 const AppModel = mongoose.model('AppModel', new mongoose.Schema({
   category: String,
@@ -148,6 +149,15 @@ try {
     res.json(facts);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+app.post('/api/contacts', async (req, res) => {
+  try {
+    const contact = await Contact.create(req.body);
+    res.json(contact);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to create contact' });
   }
 });
 
