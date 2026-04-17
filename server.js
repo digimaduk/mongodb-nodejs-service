@@ -18,8 +18,8 @@ app.use(express.json());
 
 const User = require('./models/User');
 const Link = require('./models/Link');
-const Link = require('./models/Question');
-const { default: Question } = require('./models/Question');
+const Question = require('./models/Question');
+const Fact = require('./models/Fact');
 
 const AppModel = mongoose.model('AppModel', new mongoose.Schema({
   category: String,
@@ -140,6 +140,16 @@ app.get("/api/questions", async (req, res) => {
   }
 });
 
+
+app.get('/api/facts', async (req, res) => {
+try {
+    console.log('Getting Fact Info');
+    const facts = await Fact.find(); 
+    res.json(facts);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Express Server running on ${PORT}`));
