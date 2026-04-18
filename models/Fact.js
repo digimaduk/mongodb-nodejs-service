@@ -5,7 +5,8 @@ const factSchema = new mongoose.Schema({
   facts: [String],
   year: String,
   type: String,
-  century : String
+  century: String,
+  party: String
 });
 
 module.exports = mongoose.model('Fact', factSchema);
