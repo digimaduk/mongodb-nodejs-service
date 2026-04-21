@@ -163,7 +163,7 @@ app.post('/api/contacts', async (req, res) => {
 });
 
 // GET /api/topics/slug
-app.get("/api/topics", async (req, res) => {
+app.get("/api/topics/:slug", async (req, res) => {
   try {
     console.log('Getting Topic Info');
     const topic = await Topic.findOne({ slug: req.params.slug });
