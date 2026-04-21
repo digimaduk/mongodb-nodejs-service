@@ -21,6 +21,7 @@ const Link = require('./models/Link');
 const Question = require('./models/Question');
 const Fact = require('./models/Fact');
 const Contact = require('./models/Contact');
+const Topic = require('./models/Topic');
 
 const AppModel = mongoose.model('AppModel', new mongoose.Schema({
   category: String,
@@ -158,6 +159,21 @@ app.post('/api/contacts', async (req, res) => {
     res.json(contact);
   } catch (err) {
     res.status(500).json({ error: 'Failed to create contact' });
+  }
+});
+
+// GET /api/topics/slug
+app.get("/api/topics", async (req, res) => {
+  try {
+    console.log('Getting Topic Info');
+    const topic = await Topic.findOne({ slug: req.params.slug });
+    res.json(topic);
+  } catch (error) {
+    console.error("Error fetching Topic:", error);
+    res.status(500).json({
+      success: false,
+      message: "Server error"
+    });
   }
 });
 
