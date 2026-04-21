@@ -8,7 +8,8 @@ const factSchema = new mongoose.Schema({
   century: String,
   party: String,
   index: Number,
-  imgPath: String
+  imgPath: String,
+  index: Number
 });
 
 module.exports = mongoose.model('Fact', factSchema);

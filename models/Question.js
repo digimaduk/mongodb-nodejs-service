@@ -36,6 +36,10 @@ const questionSchema = new mongoose.Schema(
         "Other"
       ],
     },
+    test: {
+      type: Number,
+      required: true
+    }
   },
   { timestamps: true }
 );
